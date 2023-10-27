@@ -2,6 +2,7 @@ package kson
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.reflect.KClass
 
 class JsonObject {
   private val objects: MutableMap<String, String> = mutableMapOf()
@@ -28,6 +29,15 @@ class JsonObject {
   fun encode(): String {
     return Json.encodeToString(objects)
   }
+
+  fun <T : Any> mapToObject(clazz: KClass<T>) : T {
+    val constructor = clazz.constructors.first()
+    val args = constructor
+      .parameters.associateWith { this.objects[it.name] }
+
+    return constructor.callBy(args)
+  }
+
 
   override fun toString(): String {
     return this.encode()

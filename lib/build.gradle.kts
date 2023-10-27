@@ -34,6 +34,7 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation("com.google.guava:guava:32.1.1-jre")
+    implementation(kotlin("reflect"))
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
